@@ -19,14 +19,16 @@ import styled, { injectGlobal } from 'styled-components';
 // }
 // `;
 
-const ButtonContainer = styled.div`
+const SecondaryButton = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  color: white;
+  color: #212B38;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: inset 0px 0px 0px 2px $dark;
+  box-sizing: border-box;
   border-radius: 8px;
   background-color: ${(p: Partial<Props>) => p.backgroundColor};
   &:hover {
@@ -34,9 +36,9 @@ const ButtonContainer = styled.div`
   }
 `;
 
-let defaultBackground = "#212B38";
+let defaultBackground = "white";
 let defaultBorder = "1px solid #212B38";
-let defaultHoverColor = "lighten(#212B38, 10%)";
+let defaultHoverColor = "darken(white, 10%)";
 
 // Define type of property
 interface Props {
@@ -50,6 +52,9 @@ interface Props {
   state1Background: string,
   state2Background: string,
   stateBackgroundColor: {state1: string, state2: string}
+  boxShadow: string,
+  boxSizing: string,
+  borderRadius: string,
 }
 
 // State type
@@ -59,7 +64,7 @@ interface State {
   status: "state1" | "state2";
 }
 
-export class Button extends React.Component<Props> {
+export class Secondary extends React.Component<Props> {
   
   // Set default properties
 
@@ -67,12 +72,17 @@ export class Button extends React.Component<Props> {
     text: "Hello World!",
     backgroundColor: defaultBackground,
     state1Background: defaultBackground,
-    state2Background: "#dedede",
+    state2Background: "#DEDEDE",
+    state1Border: defaultBorder,
+    state2Border: "#DEDEDE",
     hoverColor: defaultHoverColor,
     width: 220,
     height: 48,
     onClick: () => {},
-    buttonState: "state1"
+    buttonState: "state1",
+    boxShadow: "inset 0px 0px 0px 2px #DEDEDE",
+    boxSizing: "border-box",
+    borderRadius: "2px"
   };
 
   // Items shown in property panel
@@ -91,16 +101,17 @@ export class Button extends React.Component<Props> {
   render() {
 
     return (
-        <ButtonContainer
+        <SecondaryButton
           onClick={this.props.onClick}
           backgroundColor={this.props.buttonState === "state1" && this.props.state1Background || this.props.state2Background}
+          border={this.props.buttonState === "state1" && this.props.state1Border || this.props.state2Border}
           hoverColor={this.props.hoverColor}
           height={this.props.height}
           width={this.props.width}
         >
           {this.props.text}
           {this.props.buttonState}
-        </ButtonContainer>
+        </SecondaryButton>
     );
   }
 }
