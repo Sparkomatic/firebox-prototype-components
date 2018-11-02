@@ -17,9 +17,9 @@ const ButtonContainer = styled.div`
   }
 `;
 
-let defaultBackground = "black";
-let defaultBorder = "1px solid black";
-let defaultHoverColor = "grey";
+let defaultBackground = "#212B38";
+let defaultBorder = "1px solid #212B38";
+let defaultHoverColor = "lighten(#212B38, 10%)";
 
 // Define type of property
 interface Props {
@@ -50,9 +50,9 @@ export class Button extends React.Component<Props> {
     text: "Hello World!",
     backgroundColor: defaultBackground,
     state1Background: defaultBackground,
-    state2Background: "grey",
-    hoverColor: "pink",
-    width: 160,
+    state2Background: "#dedede",
+    hoverColor: defaultHoverColor,
+    width: 220,
     height: 48,
     onClick: () => {},
     buttonState: "state1"
