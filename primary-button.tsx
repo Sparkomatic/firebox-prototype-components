@@ -19,7 +19,7 @@ import styled, { injectGlobal } from 'styled-components';
 // }
 // `;
 
-const ButtonContainer = styled.div`
+const PrimaryButton = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
@@ -91,7 +91,7 @@ export class Button extends React.Component<Props> {
   render() {
 
     return (
-        <ButtonContainer
+        <PrimaryButton
           onClick={this.props.onClick}
           backgroundColor={this.props.buttonState === "state1" && this.props.state1Background || this.props.state2Background}
           hoverColor={this.props.hoverColor}
@@ -99,8 +99,7 @@ export class Button extends React.Component<Props> {
           width={this.props.width}
         >
           {this.props.text}
-          {this.props.buttonState}
-        </ButtonContainer>
+        </PrimaryButton>
     );
   }
 }
