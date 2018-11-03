@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Override, Data, PropertyControls, ControlType } from "framer";
 
-import styled, { injectGlobal } from 'styled-components';
+import styled, { injectGlobal } from "styled-components";
 
 // injectGlobal`
 // /* source-sans-pro-regular - latin */
@@ -23,10 +23,11 @@ const DefaultButton = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  /* color: white; */
   display: flex;
   align-items: center;
   justify-content: center;
+  color: ${(p: Partial<Props>) => p.color};
+  border-radius: "2px";
   background-color: ${(p: Partial<Props>) => p.backgroundColor};
   &:hover {
     background-color: ${(p: Partial<Props>) => p.hoverColor};
@@ -36,77 +37,116 @@ const DefaultButton = styled.div`
 let primaryBackground = "#212B38";
 let primaryText = "white";
 let primaryBorder = "1px solid #212B38";
-let primaryHoverColor = "grey";
-let primaryBackgroundDisabled = "grey";
-
+let primaryHoverColor = "#344458";
+let primaryBackgroundDisabled = "#dedede";
 let secondaryBackground = "white";
 let secondaryText = "#212B38";
 let secondaryBorder = "1px solid #212B38";
-let secondaryHoverColor = "grey";
-let secondaryBackgroundDisabled = "grey";
-
+let secondaryHoverColor = "#050608";
+let secondaryBackgroundDisabled = "white";
+let secondaryTextDisabled = "#dedede";
 
 // let defaultHoverColor = "lighten(#212B38, 10%)";
 
 // Define type of property
 interface Props {
   text: string;
+  color: string;
   hoverColor: string;
   backgroundColor: string;
+  border: string;
   onClick: () => void;
   width: number;
   height: number;
   buttonState: "enabled" | "disabled";
+  buttonType: "primary" | "disabled";
 }
 
 // State type
 
 interface State {
-  isSecondaryButton: boolean;
-  status: "state1" | "state2";
+  state: "enabled" | "disabled";
 }
 
-export class Button extends React.Component<Props> {
-  
+interface Type {
+  type: "primary" | "primary";
+}
+
+export class Super_Button extends React.Component<Props> {
   // Set default properties
 
   static defaultProps = {
-    text: "Hello World!",
-    backgroundColor: defaultBackground,
-    state1Background: defaultBackground,
-    state2Background: "#dedede",
-    hoverColor: defaultHoverColor,
+    text: "Continue",
+    color: primaryText,
+    backgroundColor: primaryBackground,
+    hoverColor: primaryHoverColor,
+    border: primaryBorder,
     width: 220,
     height: 48,
     onClick: () => {},
-    buttonState: "state1"
+    buttonType: "primary",
+    buttonState: "enabled"
   };
 
   // Items shown in property panel
   static propertyControls: PropertyControls = {
     text: { type: ControlType.String, title: "Text" },
-    backgroundColor: { type: ControlType.Color, title: "Background Colour" },
-    hoverColor: { type: ControlType.Color, title: "Hover Colour" },
     buttonState: {
       type: ControlType.Enum,
-      options: ["state1", "state2"],
+      options: ["enabled", "disabled"],
       optionTitles: ["Enabled", "Disabled"],
       title: "Button State"
     },
+    buttonType: {
+      type: ControlType.Enum,
+      options: ["primary", "secondary"],
+      optionTitles: ["Primary", "Secondary"],
+      title: "Button Type"
+    }
   };
 
   render() {
 
+    let getBackground = (type, state) => {
+      if (type === "primary" && state === "enabled") {
+        return primaryBackground;
+      } else if (type === "primary" && state === "disabled") {
+        return primaryBackgroundDisabled;
+      } else if (type === "secondary" && state === "enabled") {
+        return secondaryBackground;
+      } else {
+        return secondaryBackgroundDisabled;
+      }
+    };
+
+    let getTextColor = (type, state) => {
+      if (type === "primary") {
+        return primaryText;
+      }
+      else if (type === "secondary" && state === "enabled") {
+        return secondaryText;
+      } else {
+        return secondaryTextDisabled;
+      }
+    };
+
+
     return (
-        <DefaultButton
-          onClick={this.props.onClick}
-          backgroundColor={this.props.buttonState === "state1" && this.props.state1Background || this.props.state2Background}
-          hoverColor={this.props.hoverColor}
-          height={this.props.height}
-          width={this.props.width}
-        >
-          {this.props.text}
-        </DefaultButton>
+      <DefaultButton
+
+        onClick={this.props.onClick}
+        color={getTextColor(this.props.buttonType,
+          this.props.buttonState)}
+        backgroundColor={getBackground(
+          this.props.buttonType,
+          this.props.buttonState
+        )}
+        hoverColor={this.props.hoverColor}
+        height={this.props.height}
+        width={this.props.width}
+      >
+        {this.props.text}
+      </DefaultButton>
     );
   }
 }
