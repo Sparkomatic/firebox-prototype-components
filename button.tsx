@@ -23,20 +23,30 @@ const DefaultButton = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  color: white;
+  /* color: white; */
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
   background-color: ${(p: Partial<Props>) => p.backgroundColor};
   &:hover {
     background-color: ${(p: Partial<Props>) => p.hoverColor};
   }
 `;
 
-let defaultBackground = "#212B38";
-let defaultBorder = "1px solid #212B38";
-let defaultHoverColor = "lighten(#212B38, 10%)";
+let primaryBackground = "#212B38";
+let primaryText = "white";
+let primaryBorder = "1px solid #212B38";
+let primaryHoverColor = "grey";
+let primaryBackgroundDisabled = "grey";
+
+let secondaryBackground = "white";
+let secondaryText = "#212B38";
+let secondaryBorder = "1px solid #212B38";
+let secondaryHoverColor = "grey";
+let secondaryBackgroundDisabled = "grey";
+
+
+// let defaultHoverColor = "lighten(#212B38, 10%)";
 
 // Define type of property
 interface Props {
@@ -46,10 +56,7 @@ interface Props {
   onClick: () => void;
   width: number;
   height: number;
-  buttonState: "state1" | "state2";
-  state1Background: string,
-  state2Background: string,
-  stateBackgroundColor: {state1: string, state2: string}
+  buttonState: "enabled" | "disabled";
 }
 
 // State type
@@ -91,7 +98,7 @@ export class Button extends React.Component<Props> {
   render() {
 
     return (
-        <PrimaryButton
+        <DefaultButton
           onClick={this.props.onClick}
           backgroundColor={this.props.buttonState === "state1" && this.props.state1Background || this.props.state2Background}
           hoverColor={this.props.hoverColor}
@@ -99,7 +106,7 @@ export class Button extends React.Component<Props> {
           width={this.props.width}
         >
           {this.props.text}
-        </PrimaryButton>
+        </DefaultButton>
     );
   }
 }
