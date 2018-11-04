@@ -24,6 +24,7 @@ const Segment = styled.div`
 
   } */
 `;
+let depth = 50;
 
 // Define type of property
 interface Props {
@@ -31,6 +32,12 @@ interface Props {
     background: string;
     width: number;
     height: number;
+    onClick: () => {},
+    buttonState: "collapsed" | "expanded";
+}
+
+interface State {
+  state: "collapsed" | "expanded";
 }
 
 export class simple_accordian_segment extends React.Component<Props> {
@@ -45,7 +52,7 @@ export class simple_accordian_segment extends React.Component<Props> {
 
     toggleRow() {
         console.log("TOGGLED");
-        this.props.height = 300;
+        depth = 300;
     }
 
     // Set default properties
@@ -54,6 +61,7 @@ export class simple_accordian_segment extends React.Component<Props> {
     background: "green",
     width: 220,
     height: 48,
+    onClick: () => {},
     }
 
     // Items shown in property panel
@@ -61,12 +69,23 @@ export class simple_accordian_segment extends React.Component<Props> {
     text: { type: ControlType.String, title: "Text" },
     }
 
+    changeState = (currentState) => {
+
+      if(currentState === "collapsed") {
+        return "expanded";
+      }
+      else {
+        return "collapsed";
+      }
+
+    }
+
     render() {
     return <Segment
-    height={this.props.height}
+    height={depth}
     width={this.props.width}
     background = {this.props.background}
-    onClick={this.toggleRow}
+    onClick={this.changeState(this.props.buttonState)}
     >{this.props.text}</Segment>;
     }
 }
