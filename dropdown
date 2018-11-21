@@ -3,8 +3,7 @@ import { PropertyControls, ControlType } from "framer";
 import styled from "styled-components";
 
 const Styled = styled("div")`
-position: relative;
-  /* width: 50%; */
+  position: relative;
   width: 100%;
   height: 100%;
   display: flex;
@@ -12,13 +11,9 @@ position: relative;
   justify-content: left;
   border-radius: "2px";
   padding: "2rem";
-  .select {
-      
-  }
-  /* color: ${(p: Partial<Props>) => p.color};
-  background-color: ${(p: Partial<Props>) => p.backgroundColor};
-  border: ${(p: Partial<Props>) => p.border}; */
-    `;
+  color: "green";
+`;
+
 
 interface Props {
   text: string;
@@ -74,13 +69,11 @@ export class Firebox_Dropdown extends React.Component<Props, State> {
         padding={this.props.padding}
       >
         <div>
-          {/* <label>Select This</label> */}
           <select
             name="form-field-name"
             value={this.state.selectedOption || ""}
             onChange={this.handleChange}
           >
-            {/* <option value="" disabled /> */}
             {options1.map(tag => (
               <option>{tag.value}</option>
             ))}
