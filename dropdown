@@ -1,0 +1,92 @@
+import * as React from "react";
+import { PropertyControls, ControlType } from "framer";
+import styled from "styled-components";
+
+const Styled = styled("div")`
+position: relative;
+  /* width: 50%; */
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  border-radius: "2px";
+  padding: "2rem";
+  .select {
+      
+  }
+  /* color: ${(p: Partial<Props>) => p.color};
+  background-color: ${(p: Partial<Props>) => p.backgroundColor};
+  border: ${(p: Partial<Props>) => p.border}; */
+    `;
+
+interface Props {
+  text: string;
+  color: string;
+  backgroundColor: string;
+  border: string;
+  padding: string;
+}
+
+interface State {
+  selectedOption: string;
+}
+
+export class Firebox_Dropdown extends React.Component<Props, State> {
+  private selectRef: React.RefObject<HTMLSelectElement>;
+
+  constructor(props) {
+    super(props);
+    this.selectRef = React.createRef();
+    this.handleChange = this.handleChange.bind(this);
+    this.state = { selectedOption: null };
+  }
+
+  componentDidMount() {
+    this.selectRef.current;
+  }
+
+  handleChange(event) {
+    console.log("handle change 1, event is ", event);
+    this.setState({ selectedOption: event.target.value || null });
+  }
+  // Set default properties
+  static defaultProps = {
+    text: "Hello World!"
+  };
+
+  // Items shown in property panel
+  static propertyControls: PropertyControls = {
+    text: { type: ControlType.String, title: "Text" }
+  };
+
+  render() {
+    const options1 = [
+      { value: "", label: "Default" },
+      { value: "one", label: "One" },
+      { value: "two", label: "Two" }
+    ];
+
+    return (
+      <Styled
+        color={this.props.color}
+        backgroundColor={this.props.backgroundColor}
+        padding={this.props.padding}
+      >
+        <div>
+          {/* <label>Select This</label> */}
+          <select
+            name="form-field-name"
+            value={this.state.selectedOption || ""}
+            onChange={this.handleChange}
+          >
+            {/* <option value="" disabled /> */}
+            {options1.map(tag => (
+              <option>{tag.value}</option>
+            ))}
+          </select>
+        </div>
+      </Styled>
+    );
+  }
+}
