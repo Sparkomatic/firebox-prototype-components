@@ -9,9 +9,13 @@ const Styled = styled("div")`
   display: flex;
   align-items: left;
   justify-content: left;
-  border-radius: "2px";
-  padding: "2rem";
-  color: "green";
+  border-radius: 2px;
+  padding: 2rem;
+  color: green;
+  background-color: red;
+  select {
+    border: 3px solid #000;
+  }
 `;
 
 
