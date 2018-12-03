@@ -149,8 +149,8 @@ export class ul_drop_down extends React.Component<Props, State> {
         <div className="dd-wrapper">
           <div className="dd-header">
             Header
-            {/* this is the line that causes the error */}
-            {/* <div className="dd-header-title">{this.state.selectedOption}</div> */}
+            {/* this is the line that causes the erro - not anymore */}
+            <div className="dd-header-title">{this.state.selectedOption.title}</div>
           </div>
           <ul className="dd-list">
             {location.map(item => (
