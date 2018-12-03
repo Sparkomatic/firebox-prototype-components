@@ -1,0 +1,165 @@
+import * as React from "react";
+import { PropertyControls, ControlType } from "framer";
+import { string } from "prop-types";
+import styled from "styled-components";
+import { JSONArray } from "framer/types/src/render/types/JSONData";
+
+const StyledDropdown = styled("div")`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  border-radius: 2px;
+  padding: 2rem;
+  color: white;
+  background-color: red;
+  select {
+    border: 3px solid #000;
+  }
+`;
+
+const location = [
+  {
+    id: 0,
+    title: "New York",
+    selected: false,
+    key: "location"
+  },
+  {
+    id: 1,
+    title: "Dublin",
+    selected: false,
+    key: "location"
+  },
+  {
+    id: 2,
+    title: "California",
+    selected: false,
+    key: "location"
+  },
+  {
+    id: 3,
+    title: "Istanbul",
+    selected: false,
+    key: "location"
+  },
+  {
+    id: 4,
+    title: "Izmir",
+    selected: false,
+    key: "location"
+  },
+  {
+    id: 5,
+    title: "Oslo",
+    selected: false,
+    key: "location"
+  }
+];
+
+interface Props {
+  text: string;
+  padding: string;
+  color: string;
+  backgroundColor: string;
+  width: number;
+  height: number;
+}
+
+//   interface State {
+//     selectedOption1: {value: string, label: string}
+//   }
+
+interface State {
+  selectedOption: { id: number; title: string; selected: boolean; key: string };
+}
+
+export class ul_drop_down extends React.Component<Props, State> {
+  private selectRef: React.RefObject<HTMLSelectElement>;
+
+  constructor(props) {
+    super(props);
+    this.selectRef = React.createRef();
+    this.handleChange = this.handleChange.bind(this);
+    this.state = { selectedOption: location[0] };
+  }
+
+  handleChange(event) {
+    this.setState({ selectedOption: event.target.value });
+  }
+
+  //   componentDidMount() {
+  //     this.selectRef.current;
+  //   }
+
+  //   handleChange1(event) {
+  //     this.setState({ selectedOption1: event.target.value || null });
+  //   }
+
+  // Set default properties
+  static defaultProps = {
+    text: "Hello World!",
+    color: "blue",
+    backgroundColor: "purple",
+    padding: "1rem",
+    width: 220,
+    height: 48,
+    // selectedOption: location[0]
+  };
+
+  // Items shown in property panel
+  static propertyControls: PropertyControls = {
+    text: { type: ControlType.String, title: "Text" }
+  };
+
+  render() {
+    const options1 = [
+      { value: "", label: "Default" },
+      { value: "one", label: "One" },
+      { value: "two", label: "Two" }
+    ];
+
+    return (
+      //   <div style={style}>
+      //     <div>
+      //       <label>Select This</label>
+      //       <select
+      //         name="form-field-name"
+      //         value={this.state.selectedOption1 || ""}
+      //         onChange={this.handleChange1}
+      //       >
+      //         {/* <option value="" disabled /> */}
+      //         {options1.map(tag => (
+      //           <option>{tag.value}</option>
+      //         ))}
+      //       </select>
+      //     </div>
+      //   </div>
+      <StyledDropdown
+        color={this.props.text}
+        backgroundColor={this.props.backgroundColor}
+        padding={this.props.padding}
+        width={this.props.width}
+        height={this.props.height}
+        // selectedOption={this.state.selectedOption}
+      >
+        <div className="dd-wrapper">
+          <div className="dd-header">
+            Header
+            {/* this is the line that causes the error */}
+            {/* <div className="dd-header-title">{this.state.selectedOption}</div> */}
+          </div>
+          <ul className="dd-list">
+            {location.map(item => (
+              <li className="dd-list-item" key={item.id}>
+                {item.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </StyledDropdown>
+    );
+  }
+}
