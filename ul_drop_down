@@ -74,6 +74,7 @@ interface Props {
 
 interface State {
   selectedOption: { id: number; title: string; selected: boolean; key: string };
+  listOpen: boolean
 }
 
 export class ul_drop_down extends React.Component<Props, State> {
@@ -83,7 +84,7 @@ export class ul_drop_down extends React.Component<Props, State> {
     super(props);
     this.selectRef = React.createRef();
     this.handleChange = this.handleChange.bind(this);
-    this.state = { selectedOption: location[0] };
+    this.state = { selectedOption: location[0], listOpen: false };
   }
 
   handleChange(event) {
