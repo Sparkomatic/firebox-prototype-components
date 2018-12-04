@@ -3,6 +3,7 @@ import { PropertyControls, ControlType } from "framer";
 import { string } from "prop-types";
 import styled from "styled-components";
 import { JSONArray } from "framer/types/src/render/types/JSONData";
+// import { State } from "framer/types/src/events/recognizer/GestureRecognizer";
 
 const StyledDropdown = styled("div")`
   position: relative;
@@ -80,16 +81,34 @@ interface State {
 export class ul_drop_down extends React.Component<Props, State> {
   private selectRef: React.RefObject<HTMLSelectElement>;
 
-  constructor(props) {
-    super(props);
-    this.selectRef = React.createRef();
-    this.handleChange = this.handleChange.bind(this);
-    this.state = { selectedOption: location[0], listOpen: false };
+  // constructor(props) {
+  //   super(props);
+  //   // this.selectRef = React.createRef();
+  //   // this.handleChange = this.handleChange.bind(this);
+  //   // this.state = { selectedOption: location[0], listOpen: false };
+  // }
+  
+  state = {
+    selectedOption: location[0],
+    listOpen: false
   }
 
-  handleChange(event) {
-    this.setState({ selectedOption: event.target.value });
+  onTap = () => {
+    const listOpen = !this.state.listOpen
+    this.setState({ ...this.state, listOpen })
   }
+
+  sayHello = () => {
+    console.log("hello you");
+  }
+
+
+  // toggleList() {
+  //   if(this.state.listOpen) {
+  //     this.setState(state.listOpen = false)
+  //   }
+
+  // }
 
   //   componentDidMount() {
   //     this.selectRef.current;
@@ -144,11 +163,12 @@ export class ul_drop_down extends React.Component<Props, State> {
         padding={this.props.padding}
         width={this.props.width}
         height={this.props.height}
+        // onTap={this.onTap}
         // selectedOption={this.state.selectedOption}
       >
         <div className="dd-wrapper">
-          <div className="dd-header">
-            Header
+          <div className="dd-header" onClick={() => this.sayHello()}>
+            Select Option {this.state.listOpen} and this
             {/* this is the line that causes the erro - not anymore */}
             <div className="dd-header-title">{this.state.selectedOption.title}</div>
           </div>
