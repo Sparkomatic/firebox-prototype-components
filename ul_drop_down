@@ -98,17 +98,27 @@ export class ul_drop_down extends React.Component<Props, State> {
     console.log("state listOpen is ", this.state.listOpen);
   }
 
-  selectItem = (id, key) => {
+  multiSelectItem = (id, key) => {
     console.log("item is ", id);
     console.log("key is ", key);
     
-    let temp = this.state[key]
-    temp[id].selected = !temp[id].selected
+    let temp = this.state[key];
+    temp[id].selected = !temp[id].selected;
     this.setState({
       ...this.state[key], temp
     })
     console.log("is item selected ", temp[id].selected);
     console.log("title is ", temp[id].title);
+  }
+
+  selectItem = (id, key) => {
+    let temp = this.state[key]
+    temp.map(item => {
+      item.selected = false;
+    })
+    temp[id].selected = !temp[id].selected;
+    console.log("all selected is ", temp);
+    // find a cleaner way to just false the previous one and true the new one rather than a full map
   }
 
   // Set default properties
