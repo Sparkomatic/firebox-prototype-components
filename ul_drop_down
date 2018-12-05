@@ -1,5 +1,5 @@
 import * as React from "react";
-import { PropertyControls, ControlType } from "framer";
+import { PropertyControls, ControlType, Frame, animate, FramerAnimation, PropertyStore, RenderTarget } from "framer";
 import { string } from "prop-types";
 import styled from "styled-components";
 import { JSONArray } from "framer/types/src/render/types/JSONData";
@@ -75,7 +75,8 @@ interface Props {
 
 interface State {
   selectedOption: { id: number; title: string; selected: boolean; key: string };
-  listOpen: boolean
+  listOpen: boolean,
+  someText: string
 }
 
 export class ul_drop_down extends React.Component<Props, State> {
@@ -90,25 +91,29 @@ export class ul_drop_down extends React.Component<Props, State> {
   
   state = {
     selectedOption: location[0],
-    listOpen: false
+    listOpen: false,
+    someText: "goobledygook"
   }
 
-  onTap = () => {
+  toggleList = () => {
     const listOpen = !this.state.listOpen
     this.setState({ ...this.state, listOpen })
+    console.log("state listOpen is ", this.state.listOpen);
   }
 
-  sayHello = () => {
-    console.log("hello you");
+  selectItem = (id, key) => {
+    console.log("item is ", id);
+    console.log("key is ", key);
+    
+    
+    let temp = this.state[key]
+    console.log("this state[key] ie temp", temp );
+    temp[id].selected = !temp[id].selected
+    this.setState({
+      ...this.state[key], temp
+    })
+    console.log("is item selected ");
   }
-
-
-  // toggleList() {
-  //   if(this.state.listOpen) {
-  //     this.setState(state.listOpen = false)
-  //   }
-
-  // }
 
   //   componentDidMount() {
   //     this.selectRef.current;
@@ -167,18 +172,20 @@ export class ul_drop_down extends React.Component<Props, State> {
         // selectedOption={this.state.selectedOption}
       >
         <div className="dd-wrapper">
-          <div className="dd-header" onClick={() => this.sayHello()}>
-            Select Option {this.state.listOpen} and this
-            {/* this is the line that causes the erro - not anymore */}
+          <div className="dd-header" onClick={() => this.toggleList()}>  
             <div className="dd-header-title">{this.state.selectedOption.title}</div>
           </div>
+          {this.state.listOpen && 
+          
           <ul className="dd-list">
-            {location.map(item => (
-              <li className="dd-list-item" key={item.id}>
-                {item.title}
-              </li>
-            ))}
-          </ul>
+          {location.map(item => (
+            <li className="dd-list-item" key={item.title} onClick={() => this.selectItem(item.id, item.key)}>
+              {item.title}
+            </li>
+          ))}
+        </ul>
+        }
+
         </div>
       </StyledDropdown>
     );
