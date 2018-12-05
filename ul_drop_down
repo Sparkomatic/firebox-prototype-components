@@ -21,45 +21,6 @@ const StyledDropdown = styled("div")`
   }
 `;
 
-const location = [
-  {
-    id: 0,
-    title: "New York",
-    selected: false,
-    key: "location"
-  },
-  {
-    id: 1,
-    title: "Dublin",
-    selected: false,
-    key: "location"
-  },
-  {
-    id: 2,
-    title: "California",
-    selected: false,
-    key: "location"
-  },
-  {
-    id: 3,
-    title: "Istanbul",
-    selected: false,
-    key: "location"
-  },
-  {
-    id: 4,
-    title: "Izmir",
-    selected: false,
-    key: "location"
-  },
-  {
-    id: 5,
-    title: "Oslo",
-    selected: false,
-    key: "location"
-  }
-];
-
 interface Props {
   text: string;
   padding: string;
@@ -74,9 +35,9 @@ interface Props {
 //   }
 
 interface State {
-  selectedOption: { id: number; title: string; selected: boolean; key: string };
+  // selectedOption: { id: number; title: string; selected: boolean; key: string };
   listOpen: boolean,
-  someText: string
+  location: JSONArray
 }
 
 export class ul_drop_down extends React.Component<Props, State> {
@@ -90,9 +51,45 @@ export class ul_drop_down extends React.Component<Props, State> {
   // }
   
   state = {
-    selectedOption: location[0],
     listOpen: false,
-    someText: "goobledygook"
+    location: [
+      {
+          id: 0,
+          title: 'New York',
+          selected: false,
+          key: 'location'
+      },
+      {
+        id: 1,
+        title: 'Dublin',
+        selected: false,
+        key: 'location'
+      },
+      {
+        id: 2,
+        title: 'California',
+        selected: false,
+        key: 'location'
+      },
+      {
+        id: 3,
+        title: 'Istanbul',
+        selected: false,
+        key: 'location'
+      },
+      {
+        id: 4,
+        title: 'Izmir',
+        selected: false,
+        key: 'location'
+      },
+      {
+        id: 5,
+        title: 'Oslo',
+        selected: false,
+        key: 'location'
+      }
+    ]
   }
 
   toggleList = () => {
@@ -105,23 +102,14 @@ export class ul_drop_down extends React.Component<Props, State> {
     console.log("item is ", id);
     console.log("key is ", key);
     
-    
     let temp = this.state[key]
-    console.log("this state[key] ie temp", temp );
     temp[id].selected = !temp[id].selected
     this.setState({
       ...this.state[key], temp
     })
-    console.log("is item selected ");
+    console.log("is item selected ", temp[id].selected);
+    console.log("title is ", temp[id].title);
   }
-
-  //   componentDidMount() {
-  //     this.selectRef.current;
-  //   }
-
-  //   handleChange1(event) {
-  //     this.setState({ selectedOption1: event.target.value || null });
-  //   }
 
   // Set default properties
   static defaultProps = {
@@ -140,28 +128,14 @@ export class ul_drop_down extends React.Component<Props, State> {
   };
 
   render() {
-    const options1 = [
-      { value: "", label: "Default" },
-      { value: "one", label: "One" },
-      { value: "two", label: "Two" }
-    ];
+    // const options1 = [
+    //   { value: "", label: "Default" },
+    //   { value: "one", label: "One" },
+    //   { value: "two", label: "Two" }
+    // ];
 
     return (
-      //   <div style={style}>
-      //     <div>
-      //       <label>Select This</label>
-      //       <select
-      //         name="form-field-name"
-      //         value={this.state.selectedOption1 || ""}
-      //         onChange={this.handleChange1}
-      //       >
-      //         {/* <option value="" disabled /> */}
-      //         {options1.map(tag => (
-      //           <option>{tag.value}</option>
-      //         ))}
-      //       </select>
-      //     </div>
-      //   </div>
+
       <StyledDropdown
         color={this.props.text}
         backgroundColor={this.props.backgroundColor}
@@ -173,12 +147,12 @@ export class ul_drop_down extends React.Component<Props, State> {
       >
         <div className="dd-wrapper">
           <div className="dd-header" onClick={() => this.toggleList()}>  
-            <div className="dd-header-title">{this.state.selectedOption.title}</div>
+            <div className="dd-header-title">{this.state.location[0].title}</div>
           </div>
           {this.state.listOpen && 
           
           <ul className="dd-list">
-          {location.map(item => (
+          {this.state.location.map(item => (
             <li className="dd-list-item" key={item.title} onClick={() => this.selectItem(item.id, item.key)}>
               {item.title}
             </li>
