@@ -99,26 +99,54 @@ export class ul_drop_down extends React.Component<Props, State> {
   }
 
   multiSelectItem = (id, key) => {
-    console.log("item is ", id);
-    console.log("key is ", key);
-    
     let temp = this.state[key];
     temp[id].selected = !temp[id].selected;
     this.setState({
       ...this.state[key], temp
     })
-    console.log("is item selected ", temp[id].selected);
-    console.log("title is ", temp[id].title);
   }
 
   selectItem = (id, key) => {
-    let temp = this.state[key]
-    temp.map(item => {
-      item.selected = false;
+    let temp = this.state[key];
+    //set selected to false for current selected
+    let currentlySelected = this.getSelected('location');
+
+    if(currentlySelected !== false)
+    {
+      currentlySelected.selected = false;
+    }
+    temp.id.selected = true;
+    
+    this.setState({
+      ...this.state[key], temp
     })
-    temp[id].selected = !temp[id].selected;
-    console.log("all selected is ", temp);
+
+    // temp.forEach(item => {
+    //   item.selected = false;
+    // });
+    // temp[id].selected = true;
+    // console.log("temp ", temp);
+    // this.setState({[key]: temp});
     // find a cleaner way to just false the previous one and true the new one rather than a full map
+  }
+
+  getSelected = (key) => {
+    let temp = this.state[key];
+    let selected = temp.filter(item => {
+      console.log(item.title, item.selected);
+      item.selected === true;
+    })
+    console.log("selected is ", selected);
+    return selected;
+
+
+    // let location = this.state.location.filter(item => {
+    //   console.log("item", item);
+    //   item.selected === true;
+
+    // });
+    // console.log("hello");
+    // console.log("get selected location is", location);
   }
 
   // Set default properties
@@ -157,7 +185,8 @@ export class ul_drop_down extends React.Component<Props, State> {
       >
         <div className="dd-wrapper">
           <div className="dd-header" onClick={() => this.toggleList()}>  
-            <div className="dd-header-title">{this.state.location[0].title}</div>
+            {/* <div className="dd-header-title">{this.state.location.filter(item => item.selected == false)}</div> */}
+            <div className="dd-header-title" >Hello</div>
           </div>
           {this.state.listOpen && 
           
