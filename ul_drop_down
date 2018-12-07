@@ -110,12 +110,14 @@ export class ul_drop_down extends React.Component<Props, State> {
     let temp = this.state[key];
     //set selected to false for current selected
     let currentlySelected = this.getSelected('location');
+    console.log("currently selected is", currentlySelected);
 
-    if(currentlySelected !== false)
+    if(currentlySelected.length == 1)
     {
       currentlySelected.selected = false;
+      console.log("just cleaned out currently selected");
     }
-    temp.id.selected = true;
+    temp[id].selected = true;
     
     this.setState({
       ...this.state[key], temp
@@ -132,11 +134,13 @@ export class ul_drop_down extends React.Component<Props, State> {
 
   getSelected = (key) => {
     let temp = this.state[key];
-    let selected = temp.filter(item => {
-      console.log(item.title, item.selected);
-      item.selected === true;
-    })
-    console.log("selected is ", selected);
+    // let selected = temp.filter(item => {
+    //   console.log(item.title, item.selected);
+    //   console.log("item.selected", item.selected);
+    //   item.selected;
+    // })
+    let selected = temp.filter(item => item.selected === true)
+    console.log("selected in getSelected post filter is ", selected);
     return selected;
 
 
