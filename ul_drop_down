@@ -30,12 +30,7 @@ interface Props {
   height: number;
 }
 
-//   interface State {
-//     selectedOption1: {value: string, label: string}
-//   }
-
 interface State {
-  // selectedOption: { id: number; title: string; selected: boolean; key: string };
   listOpen: boolean,
   location: JSONArray
 }
@@ -43,13 +38,6 @@ interface State {
 export class ul_drop_down extends React.Component<Props, State> {
   private selectRef: React.RefObject<HTMLSelectElement>;
 
-  // constructor(props) {
-  //   super(props);
-  //   // this.selectRef = React.createRef();
-  //   // this.handleChange = this.handleChange.bind(this);
-  //   // this.state = { selectedOption: location[0], listOpen: false };
-  // }
-  
   state = {
     listOpen: false,
     location: [
@@ -99,58 +87,28 @@ export class ul_drop_down extends React.Component<Props, State> {
   }
 
   multiSelectItem = (id, key) => {
-    let temp = this.state[key];
-    temp[id].selected = !temp[id].selected;
-    this.setState({
-      ...this.state[key], temp
-    })
+    let temp = {};
+    temp[key]= this.state[key].map(obj => {
+      if(obj.id == id) {
+        obj.selected = !obj.selected;
+      }
+      return obj;
+    });
+
+    this.setState(temp);
+    console.log("THIS STATE", this.state);
   }
 
   selectItem = (id, key) => {
-    let temp = this.state[key];
-    //set selected to false for current selected
-    let currentlySelected = this.getSelected('location');
-    console.log("currently selected is", currentlySelected);
-
-    if(currentlySelected.length == 1)
-    {
-      currentlySelected.selected = false;
-      console.log("just cleaned out currently selected");
-    }
-    temp[id].selected = true;
+    let temp = {};
+    temp[key]= this.state[key].map(obj => {
+    obj.selected = obj.id == id;
+      return obj;
+    });
     
-    this.setState({
-      ...this.state[key], temp
-    })
+    this.setState(temp);
+    console.log("THIS SINGLE SELECT STATE", this.state);
 
-    // temp.forEach(item => {
-    //   item.selected = false;
-    // });
-    // temp[id].selected = true;
-    // console.log("temp ", temp);
-    // this.setState({[key]: temp});
-    // find a cleaner way to just false the previous one and true the new one rather than a full map
-  }
-
-  getSelected = (key) => {
-    let temp = this.state[key];
-    // let selected = temp.filter(item => {
-    //   console.log(item.title, item.selected);
-    //   console.log("item.selected", item.selected);
-    //   item.selected;
-    // })
-    let selected = temp.filter(item => item.selected === true)
-    console.log("selected in getSelected post filter is ", selected);
-    return selected;
-
-
-    // let location = this.state.location.filter(item => {
-    //   console.log("item", item);
-    //   item.selected === true;
-
-    // });
-    // console.log("hello");
-    // console.log("get selected location is", location);
   }
 
   // Set default properties
@@ -170,11 +128,6 @@ export class ul_drop_down extends React.Component<Props, State> {
   };
 
   render() {
-    // const options1 = [
-    //   { value: "", label: "Default" },
-    //   { value: "one", label: "One" },
-    //   { value: "two", label: "Two" }
-    // ];
 
     return (
 
