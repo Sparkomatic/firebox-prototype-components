@@ -101,7 +101,7 @@ export class ul_drop_down extends React.Component<Props, State> {
 
   selectItem = (id, key) => {
     let temp = {};
-    temp[key]= this.state[key].map(obj => {
+    temp[key] = this.state[key].map(obj => {
     obj.selected = obj.id == id;
       return obj;
     });
@@ -109,6 +109,22 @@ export class ul_drop_down extends React.Component<Props, State> {
     this.setState(temp);
     console.log("THIS SINGLE SELECT STATE", this.state);
 
+  }
+
+  getSelectedItem = (key) => {
+    // let temp = {};
+    // temp[key] = this.state
+    let selected = this.state[key].filter(item => {
+      return item.selected;
+    });
+    console.log("SELECTED IS", selected);
+    console.log("SELECTED[0] IS", selected[0]);
+    if(selected[0]) {
+      return selected[0].title;
+    }
+    else {
+      return "Select One..."
+    }
   }
 
   // Set default properties
@@ -143,7 +159,7 @@ export class ul_drop_down extends React.Component<Props, State> {
         <div className="dd-wrapper">
           <div className="dd-header" onClick={() => this.toggleList()}>  
             {/* <div className="dd-header-title">{this.state.location.filter(item => item.selected == false)}</div> */}
-            <div className="dd-header-title" >Hello</div>
+            <div className="dd-header-title" >Hello {this.getSelectedItem('location')}</div>
           </div>
           {this.state.listOpen && 
           
